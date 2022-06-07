@@ -19,6 +19,8 @@ class TodoController extends Controller
         $this->validate($request,[
 'description' => ['required','max:255','unique:todos,description']
         ]);
+
+        // saving todo
         $todo->description = $request->description;
         $todo->save();
 
