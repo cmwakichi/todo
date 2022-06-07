@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="//unpkg.com/alpinejs" defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -22,45 +23,38 @@
         </style>
     </head>
     <body>
-    <div class="container mt-10 mx-auto">
-        <header class="mx-auto bg-blue-200 font-bold
-            text-5xl w-100">Todo Items</header>
-        <form method="POST" action="/">
-            @csrf
+        <div >
+            <header
+                class="p-4 mb-4 mx-auto bg-blue-500 font-bold
+                text-5xl text-center">Todo Items</header>
 
-            <textarea
+        </div>
+        <div class="flex-end">
+            <a  title="add new todo" href="/create"
+                                  class="text-white-500 border bg-blue-800 p-4 m-4">Add item</a>
+        </div>
 
-                name="description"
-                cols="150"
-                rows="5"
-                placeholder="enter your text here"
-                class="bg-gray-100 dark:border-gray-700"></textarea>
-            <button class="hover:bg-green-400 p-5 text-sm bg-blue-500 mt-2 text-white">Add</button>
-        </form>
-    </div>
-    <div class="container mt-10 mx-auto">
-        <table class="table-auto ">
-            <caption>My Todo List Items</caption>
-            <thead>
-              <tr>
-                <th class="border border-slate-300">Id</th>
-                <th>Item Description</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-            @foreach($todos as $todo):
-                <tr>
-                    <td>$todo->id</td>
-                    <td>$todo->description</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-            @endforeach
-            </tbody>
 
-        </table>
-    </div>
+            <div class="flex flex-col">
+
+                @foreach($todos as $todo)
+                    <div class="border rounded m-4 p-1 bg-gray-100 border-blue-500 flex items-center">
+                        <span class="text-sm m-4">{{ $todo->description }}</span>
+                        <span class="text-sm m-4">{{$todo->created_at}}</span>
+                        <span class="bg-blue-500 rounded p-2 hover:bg-green-200">
+                            <a href="#" class="m-4 ">Edit</a></span>
+                        <span>
+                            <form method="POST" action="/todos/{$todo->id}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="bg-blue-500 rounded p-2 m-2 hover:bg-green-200">Delete</button>
+                            </form>
+                        </span>
+                    </div>
+                @endforeach
+                <p class="m-4">You have {{ $todos->count() }} pending todos</p>
+            </div>
+            <div class="m-4">{{$todos->links()}}</div>
+
     </body>
 </html>

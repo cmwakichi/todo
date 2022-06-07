@@ -8,14 +8,25 @@ use Illuminate\Validation\Rule;
 
 class TodoController extends Controller
 {
-    public function index(){
-        return view('index',['todos'=>todo::all()]);
+    public function create(){
+        return view('create');
     }
-    public function store(Request $request){
-        $attribute = $request->validate([
-            'description'=>'required'
+    public function index(){
+        return view('index',['todos'=>todo::latest()->paginate(5)]);
+    }
+    public function store(Request $request,todo $todo){
+
+        $this->validate($request,[
+'description' => ['required','max:255','unique:todos,description']
         ]);
-        todo::create($attribute);
+        $todo->description = $request->description;
+        $todo->save();
+
         return redirect('/');
     }
+    public function destroy(todo $todo){
+        $todo->delete();
+        return back()->with('success', 'item deleted');
+    }
+
 }
