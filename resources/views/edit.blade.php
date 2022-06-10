@@ -23,19 +23,20 @@
     </style>
 </head>
 <body>
-    <div class="container mt-10 mx-auto border border-blue-500 p-10 rounded-xl max-w-lg">
-        <div>
-            <h1 class="mb-10 text-center text-bold text-xl">Create Todo</h1>
-        </div>
-        <form method="POST" action="/todo">
-            @csrf
-
-            <div class="block">
-                <label for="description" class="block">Description:</label>
-                <input autocapitalize="sentences" type="text" name="description"
-                       class="border border-gray-200 h-20 ">
-            </div>
-            <button class="block rounded-sm block hover:bg-green-400 p-2 text-sm bg-blue-500 mt-2 text-white">Add</button>
-        </form>
+<div class="container mt-10 mx-auto border border-blue-500 p-10 rounded-xl max-w-lg">
+    <div>
+        <h1 class="mb-10 text-center text-bold text-xl">Edit Todo</h1>
     </div>
+    <form method="POST" action="/todos/{{$todo->id}}">
+        @csrf
+        @method('PATCH')
+        <div class="block">
+            <label for="description" class="block">Description:</label>
+            <input autocapitalize="sentences" type="text" name="description"
+                   value="{{old('description', $todo->description)}}"
+                   class="border border-gray-200 h-20 ">
+        </div>
+        <button class="block rounded-sm block hover:bg-green-400 p-2 text-sm bg-blue-500 mt-2 text-white">Add</button>
+    </form>
+</div>
 </body>

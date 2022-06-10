@@ -30,7 +30,7 @@
 
         </div>
         <div class="flex-end">
-            <a  title="add new todo" href="/create"
+            <a  title="add new todo" href="todo/create"
                                   class="text-white-500 border bg-blue-800 p-4 m-4">Add item</a>
         </div>
 
@@ -41,13 +41,19 @@
                     <div class="border rounded m-4 p-1 bg-gray-100 border-blue-500 flex items-center">
                         <span class="text-sm m-4">{{ $todo->description }}</span>
                         <span class="text-sm m-4">{{$todo->created_at}}</span>
-                        <span class="bg-blue-500 rounded p-2 hover:bg-green-200">
-                            <a href="#" class="m-4 ">Edit</a></span>
                         <span>
-                            <form method="POST" action="/todos/{$todo->id}">
+                            <form method="GET" action="/todos/{{$todo->id}}/edit">
+                                @csrf
+
+                                <button
+                                    class="bg-blue-500 text-sm rounded-sm p-2 m-2 hover:bg-green-200">Edit</button>
+                            </form>
+                        </span>
+                        <span>
+                            <form method="POST" action="/todos/{{$todo->id}}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="bg-blue-500 rounded p-2 m-2 hover:bg-green-200">Delete</button>
+                                <button class="bg-blue-500 rounded-sm  p-2 m-2 hover:bg-red-800">Delete</button>
                             </form>
                         </span>
                     </div>

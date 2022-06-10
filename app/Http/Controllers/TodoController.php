@@ -24,11 +24,19 @@ class TodoController extends Controller
         $todo->description = $request->description;
         $todo->save();
 
-        return redirect('/');
+        return redirect('/todo');
+    }
+    public function edit(todo $todo){
+        return view('edit', ['todo'=>$todo]);
+    }
+    public function update(Request $request,todo $todo){
+        $this->validate($request,['description'=>['required', 'max:255', 'unique:todos, description']]);
+        $todo->description = $request->description;
+        $todo->update();
     }
     public function destroy(todo $todo){
         $todo->delete();
-        return back()->with('success', 'item deleted');
+        return back();
     }
 
 }
