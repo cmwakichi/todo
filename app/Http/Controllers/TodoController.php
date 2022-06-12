@@ -38,7 +38,9 @@ class TodoController extends Controller
 
     public function update(Request $request, todo $todo)
     {
-
+        $validated = $request->validate([
+            'description'=>['required', 'max:255', 'unique:todos,description']
+        ]);
         $todo->description = $request->description;
         $todo->update(['description' => $request->description]);
 
