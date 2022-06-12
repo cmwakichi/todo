@@ -30,9 +30,11 @@ class TodoController extends Controller
         return view('edit', ['todo'=>$todo]);
     }
     public function update(Request $request,todo $todo){
-        $this->validate($request,['description'=>['required', 'max:255', 'unique:todos, description']]);
+        $validated = $request->validate([
+            'description'=>['required', 'max:255', 'unique:todos, description']
+        ]);
         $todo->description = $request->description;
-        $todo->update();
+        $todo->update(['description'=>$request->description]);
     }
     public function destroy(todo $todo){
         $todo->delete();

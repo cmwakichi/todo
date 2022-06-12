@@ -9,4 +9,5 @@ class todo extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
 }

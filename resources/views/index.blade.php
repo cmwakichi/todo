@@ -40,7 +40,7 @@
                 @foreach($todos as $todo)
                     <div class="border rounded m-4 p-1 bg-gray-100 border-blue-500 flex items-center">
                         <span class="text-sm m-4">{{ $todo->description }}</span>
-                        <span class="text-sm m-4">{{$todo->created_at}}</span>
+                        <span class="text-sm m-4">{{$todo->created_at->diffForHumans()}}</span>
                         <span>
                             <form method="GET" action="/todos/{{$todo->id}}/edit">
                                 @csrf
